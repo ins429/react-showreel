@@ -11,6 +11,8 @@ const translateXCss = ({ translateX = 0 }) => css`
   transform: translateX(-${translateX}px);
 `
 
+const transitionSpeed = ({ speed = 300 }) => `${parseInt(speed) || 300}ms`
+
 const ListContainer = styled.div`
   display: flex;
   flex-basis: 100%
@@ -18,7 +20,7 @@ const ListContainer = styled.div`
   height: 250px;
 
   ${translateXCss};
-  transition: transform 300ms ease 100ms;
+  transition: transform ${transitionSpeed} ease 100ms;
 
   & > * {
     flex: 0 0 auto;
@@ -53,9 +55,12 @@ const NavButton = styled.button`
   }
 `
 
-const ChevronIcon = () => <div>chev</div>
-
-const Showreel = ({ children }) => {
+const Showreel = ({
+  children,
+  slidesToScroll = 1,
+  infinite = false,
+  speed = 300
+}) => {
   const listContainer = useRef(null)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [translateX, setTranslateX] = useState(0)
@@ -73,13 +78,6 @@ const Showreel = ({ children }) => {
     } = listContainer.current.getBoundingClientRect()
     const { left, width } = lastChild.getBoundingClientRect()
 
-    console.log(
-      'getIsLastItemVisible',
-      containerWidth < left + width,
-      containerWidth,
-      left,
-      width
-    )
     return containerWidth < left + width
   }, [listContainer])
 
@@ -104,7 +102,11 @@ const Showreel = ({ children }) => {
         {currentIndex !== 0 ? (
           <NavButton
             disabled={lockButtons}
-            onClick={() => setCurrentIndex(currentIndex - 1)}
+            onClick={() => {
+              const indexToScroll = currentIndex - slidesToScroll
+
+              setCurrentIndex(indexToScroll < 0 ? 0 : indexToScroll)
+            }}
           >
             &#x2190;
           </NavButton>
@@ -114,7 +116,15 @@ const Showreel = ({ children }) => {
         {displayNextButton ? (
           <NavButton
             disabled={lockButtons}
-            onClick={() => setCurrentIndex(currentIndex + 1)}
+            onClick={() => {
+              const indexToScroll = currentIndex + slidesToScroll
+
+              setCurrentIndex(
+                indexToScroll > listContainer.current.children.length - 1
+                  ? currentIndex + 1
+                  : indexToScroll
+              )
+            }}
           >
             &#x2192;
           </NavButton>
@@ -125,6 +135,7 @@ const Showreel = ({ children }) => {
       <ListContainer
         ref={listContainer}
         translateX={translateX}
+        speed={speed}
         onTransitionEnd={() => {
           setDisplayNextButton(getIsLastItemVisible())
           setLockButtons(false)
