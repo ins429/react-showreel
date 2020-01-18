@@ -58,6 +58,7 @@ const NavButton = styled.button`
 const Showreel = ({
   children,
   slidesToScroll = 1,
+  slidePage = false,
   infinite = false,
   speed = 300
 }) => {
@@ -103,6 +104,32 @@ const Showreel = ({
           <NavButton
             disabled={lockButtons}
             onClick={() => {
+              if (slidePage) {
+                const childrenCount = listContainer.current.children.length
+                const {
+                  width: containerWidth
+                } = listContainer.current.getBoundingClientRect()
+
+                let index = currentIndex - 1
+                let width = 0
+
+                while (index > 0 && width < containerWidth) {
+                  const prevChild = listContainer.current.children[index]
+                  const {
+                    width: prevChildWidth
+                  } = prevChild.getBoundingClientRect()
+
+                  width = width + prevChildWidth
+                  if (width > containerWidth) {
+                    break
+                  }
+                  index = index - 1
+                }
+
+                setCurrentIndex(index)
+                return
+              }
+
               const indexToScroll = currentIndex - slidesToScroll
 
               setCurrentIndex(indexToScroll < 0 ? 0 : indexToScroll)
@@ -117,6 +144,32 @@ const Showreel = ({
           <NavButton
             disabled={lockButtons}
             onClick={() => {
+              if (slidePage) {
+                const childrenCount = listContainer.current.children.length
+                const {
+                  width: containerWidth
+                } = listContainer.current.getBoundingClientRect()
+
+                let index = currentIndex
+                let width = 0
+
+                while (width < containerWidth) {
+                  const nextChild = listContainer.current.children[index]
+                  const {
+                    width: nextChildWidth
+                  } = nextChild.getBoundingClientRect()
+
+                  width = width + nextChildWidth
+                  if (width > containerWidth) {
+                    break
+                  }
+                  index = index + 1
+                }
+
+                setCurrentIndex(index)
+                return
+              }
+
               const indexToScroll = currentIndex + slidesToScroll
 
               setCurrentIndex(

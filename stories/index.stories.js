@@ -118,3 +118,27 @@ export const speed = () => (
     )}
   </NumberState>
 )
+
+export const slidePage = () => (
+  <Container>
+    <Showreel slidePage>
+      <Box>1</Box>
+      <Box width={100} height={100}>
+        2
+      </Box>
+      <Box>3</Box>
+      <Box width={200} height={200}>
+        4
+      </Box>
+      <Box width={400} height={400}>
+        5
+      </Box>
+      <Box>6</Box>
+      <Box>7</Box>
+      <Box width={800} height={200}>
+        8
+      </Box>
+      <Box>9</Box>
+    </Showreel>
+  </Container>
+)
