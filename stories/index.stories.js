@@ -12,7 +12,7 @@ const Box = ({ children, width = 300, height = 300 }) => (
       background: 'green',
       width,
       height,
-      margin: '0 5px'
+      margin: '0 2px'
     }}
   >
     {children}
@@ -163,6 +163,85 @@ export const infinite = () => (
         8
       </Box>
       <Box>9</Box>
+    </Showreel>
+  </Container>
+)
+
+export const images = () => (
+  <Container>
+    <Showreel slidesToScroll={2}>
+      <div>
+        <img src="https://via.placeholder.com/150" alt="150" />
+      </div>
+      <div>
+        <img src="https://via.placeholder.com/200" alt="200" />
+      </div>
+      <div>
+        <img src="https://via.placeholder.com/250" alt="250" />
+      </div>
+      <div>
+        <img src="https://via.placeholder.com/350" alt="350" />
+      </div>
+      <div>
+        <img src="https://via.placeholder.com/400" alt="400" />
+      </div>
+      <div>
+        <img src="https://via.placeholder.com/300" alt="300" />
+      </div>
+      <div>
+        <img src="https://via.placeholder.com/200" alt="200" />
+      </div>
+      <div>
+        <img src="https://via.placeholder.com/100" alt="100" />
+      </div>
+      <div>
+        <img src="https://via.placeholder.com/300" alt="300" />
+      </div>
+    </Showreel>
+  </Container>
+)
+
+const FlexAlignCenter = ({ children }) => (
+  <div
+    style={{
+      display: 'flex',
+      alignItems: 'center'
+    }}
+  >
+    {children}
+  </div>
+)
+
+export const imagesAlignCenter = () => (
+  <Container>
+    <Showreel slidesToScroll={2}>
+      <FlexAlignCenter>
+        <img src="https://via.placeholder.com/150" alt="150" />
+      </FlexAlignCenter>
+      <FlexAlignCenter>
+        <img src="https://via.placeholder.com/200" alt="200" />
+      </FlexAlignCenter>
+      <FlexAlignCenter>
+        <img src="https://via.placeholder.com/250" alt="250" />
+      </FlexAlignCenter>
+      <FlexAlignCenter>
+        <img src="https://via.placeholder.com/350" alt="350" />
+      </FlexAlignCenter>
+      <FlexAlignCenter>
+        <img src="https://via.placeholder.com/400" alt="400" />
+      </FlexAlignCenter>
+      <FlexAlignCenter>
+        <img src="https://via.placeholder.com/300" alt="300" />
+      </FlexAlignCenter>
+      <FlexAlignCenter>
+        <img src="https://via.placeholder.com/200" alt="200" />
+      </FlexAlignCenter>
+      <FlexAlignCenter>
+        <img src="https://via.placeholder.com/100" alt="100" />
+      </FlexAlignCenter>
+      <FlexAlignCenter>
+        <img src="https://via.placeholder.com/300" alt="300" />
+      </FlexAlignCenter>
     </Showreel>
   </Container>
 )
