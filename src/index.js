@@ -1,59 +1,33 @@
-import React, { useCallback, useRef, useState, useEffect } from 'react'
-import styled, { css } from 'styled-components'
+import React, {
+  forwardRef,
+  useCallback,
+  useRef,
+  useState,
+  useEffect
+} from 'react'
+import './style.css'
 
-const Container = styled.div`
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-`
+const getListContainerTransformCss = (translateX = 0) =>
+  `translateX(-${translateX}px)`
 
-const translateXCss = ({ translateX = 0 }) => css`
-  transform: translateX(-${translateX}px);
-`
+const getListContainerTransitionCss = (transitionSpeed = 300) =>
+  `transform ${transitionSpeed}ms ease 100ms`
 
-const transitionSpeedCss = ({ transitionSpeed = 300 }) => `${transitionSpeed}ms`
-
-const ListContainer = styled.div`
-  display: flex;
-  flex-basis: 100%
-  width: 100%;
-  height: 250px;
-
-  ${translateXCss};
-  transition: transform ${transitionSpeedCss};
-
-  & > * {
-    flex: 0 0 auto;
-  }
-`
-
-const ControlBox = styled.div`
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`
-
-const NavButton = styled.button`
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  width: 2.5rem;
-  height: 2.5rem;
-  margin: 1.25rem;
-  z-index: 2;
-  box-shadow: 0;
-  border: 0;
-
-  svg {
-    pointer-events: none;
-  }
-`
+const ListContainer = forwardRef(
+  ({ children, transitionSpeed, translateX, handleTransitionEnd }, ref) => (
+    <div
+      ref={ref}
+      className="showreel-list-container"
+      onTransitionEnd={handleTransitionEnd}
+      style={{
+        transition: getListContainerTransitionCss(transitionSpeed),
+        transform: getListContainerTransformCss(translateX)
+      }}
+    >
+      {children}
+    </div>
+  )
+)
 
 const Showreel = ({
   children,
@@ -104,11 +78,16 @@ const Showreel = ({
     setDisplayNextButton(getIsLastItemVisible())
   }, [])
 
+  useEffect(() => {
+    setTransitionSpeed(speed)
+  }, [speed])
+
   return (
-    <Container>
-      <ControlBox>
+    <div className="showreel-container">
+      <div className="showreel-control">
         {currentIndex !== 0 ? (
-          <NavButton
+          <button
+            className="showreel-nav-button"
             disabled={lockButtons}
             onClick={() => {
               if (slidePage) {
@@ -143,12 +122,13 @@ const Showreel = ({
             }}
           >
             &#x2190;
-          </NavButton>
+          </button>
         ) : (
           <div />
         )}
         {displayNextButton ? (
-          <NavButton
+          <button
+            className="showreel-nav-button"
             disabled={lockButtons}
             onClick={() => {
               if (slidePage) {
@@ -187,16 +167,16 @@ const Showreel = ({
             }}
           >
             &#x2192;
-          </NavButton>
+          </button>
         ) : (
           <div />
         )}
-      </ControlBox>
+      </div>
       <ListContainer
         ref={listContainer}
         translateX={translateX}
         transitionSpeed={transitionSpeed}
-        onTransitionEnd={() => {
+        handleTransitionEnd={() => {
           setDisplayNextButton(getIsLastItemVisible())
           setLockButtons(false)
 
@@ -221,7 +201,7 @@ const Showreel = ({
       >
         {infinite ? [...children, ...children, ...children] : children}
       </ListContainer>
-    </Container>
+    </div>
   )
 }
 

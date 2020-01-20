@@ -1,0 +1,43 @@
+.showreel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.showreel-control {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.showreel-nav-button {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 1.25rem;
+  z-index: 2;
+  box-shadow: 0;
+  border: 0;
+}
+
+.showreel-nav-button svg {
+  pointer-events: none;
+}
+
+.showreel-list-container {
+  display: flex;
+  flex-basis: 100%;
+  width: 100%;
+}
+
+.showreel-list-container > * {
+  flex: 0 0 auto;
+}
