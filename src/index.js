@@ -11,7 +11,7 @@ const translateXCss = ({ translateX = 0 }) => css`
   transform: translateX(-${translateX}px);
 `
 
-const transitionSpeed = ({ speed = 300 }) => `${parseInt(speed) || 300}ms`
+const transitionSpeedCss = ({ transitionSpeed = 300 }) => `${transitionSpeed}ms`
 
 const ListContainer = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ const ListContainer = styled.div`
   height: 250px;
 
   ${translateXCss};
-  transition: transform ${transitionSpeed} ease 100ms;
+  transition: transform ${transitionSpeedCss};
 
   & > * {
     flex: 0 0 auto;
@@ -64,6 +64,7 @@ const Showreel = ({
 }) => {
   const listContainer = useRef(null)
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [transitionSpeed, setTransitionSpeed] = useState(speed)
   const [translateX, setTranslateX] = useState(0)
   const [displayNextButton, setDisplayNextButton] = useState(false)
   const [lockButtons, setLockButtons] = useState(false)
@@ -92,6 +93,12 @@ const Showreel = ({
       }
     }
   }, [listContainer, currentIndex])
+
+  useEffect(() => {
+    if (listContainer.current && infinite) {
+      setCurrentIndex(listContainer.current.children.length / 3)
+    }
+  }, [listContainer])
 
   useEffect(() => {
     setDisplayNextButton(getIsLastItemVisible())
@@ -188,13 +195,31 @@ const Showreel = ({
       <ListContainer
         ref={listContainer}
         translateX={translateX}
-        speed={speed}
+        transitionSpeed={transitionSpeed}
         onTransitionEnd={() => {
           setDisplayNextButton(getIsLastItemVisible())
           setLockButtons(false)
+
+          if (transitionSpeed < 1) {
+            setTransitionSpeed(speed)
+            return
+          }
+
+          if (infinite) {
+            const childCount = listContainer.current.children.length / 3
+
+            if (currentIndex < childCount) {
+              setTransitionSpeed(0.5)
+              setCurrentIndex(currentIndex + childCount)
+            }
+            if (currentIndex > childCount * 2) {
+              setTransitionSpeed(0.5)
+              setCurrentIndex(currentIndex - childCount)
+            }
+          }
         }}
       >
-        {children}
+        {infinite ? [...children, ...children, ...children] : children}
       </ListContainer>
     </Container>
   )
