@@ -1,3 +1,3 @@
-# REACT-SHOWREEL
+# React Showreel
 
 Yet another carousel, slider, ...
