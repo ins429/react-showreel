@@ -177,7 +177,7 @@ var Showreel = function Showreel(_ref2) {
         left = _lastChild$getBoundin.left,
         width = _lastChild$getBoundin.width;
 
-    console.log('getIsLastItemNotVisible', containerWidth < left + width);
+    console.log('getIsLastItemNotVisible', lastChild, containerWidth, left, width);
     return containerWidth < left + width;
   }, [listContainer]);
   React.useEffect(function () {
