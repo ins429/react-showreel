@@ -1,6 +1,6 @@
 {
   "name": "react-showreel",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "Horizontal navigation",
   "main": "dist/cjs.js",
   "author": "Peter Lee",
