@@ -17,13 +17,12 @@ export default {
   ],
   plugins: [
     postcss({
-      extract: false,
-      modules: true
+      extract: false
     }),
-    resolve(),
     babel({
       exclude: 'node_modules/**'
-    })
+    }),
+    resolve()
   ],
   external: ['react', 'react-dom']
 }

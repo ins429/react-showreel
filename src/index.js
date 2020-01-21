@@ -42,7 +42,8 @@ const Showreel = ({
   const [translateX, setTranslateX] = useState(0)
   const [displayNextButton, setDisplayNextButton] = useState(false)
   const [lockButtons, setLockButtons] = useState(false)
-  const getIsLastItemVisible = useCallback(() => {
+  const getIsLastItemNotVisible = useCallback(() => {
+    console.log('getIsLastItemNotVisible 0')
     if (!listContainer.current) {
       return false
     }
@@ -54,6 +55,7 @@ const Showreel = ({
     } = listContainer.current.getBoundingClientRect()
     const { left, width } = lastChild.getBoundingClientRect()
 
+    console.log('getIsLastItemNotVisible', containerWidth < left + width)
     return containerWidth < left + width
   }, [listContainer])
 
@@ -75,8 +77,9 @@ const Showreel = ({
   }, [listContainer])
 
   useEffect(() => {
-    setDisplayNextButton(getIsLastItemVisible())
+    setDisplayNextButton(getIsLastItemNotVisible())
   }, [])
+  console.log('here')
 
   useEffect(() => {
     setTransitionSpeed(speed)
