@@ -55,7 +55,13 @@ const Showreel = ({
     } = listContainer.current.getBoundingClientRect()
     const { left, width } = lastChild.getBoundingClientRect()
 
-    console.log('getIsLastItemNotVisible', containerWidth < left + width)
+    console.log(
+      'getIsLastItemNotVisible',
+      lastChild,
+      containerWidth,
+      left,
+      width
+    )
     return containerWidth < left + width
   }, [listContainer])
 
