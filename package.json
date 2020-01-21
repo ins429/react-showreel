@@ -2,7 +2,7 @@
   "name": "react-showreel",
   "version": "0.0.1",
   "description": "Horizontal navigation",
-  "main": "index.js",
+  "main": "dist/cjs.js",
   "author": "Peter Lee",
   "license": "MIT",
   "private": false,
