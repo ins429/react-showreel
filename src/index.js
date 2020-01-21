@@ -6,6 +6,7 @@ import React, {
   useEffect
 } from 'react'
 import './style.css'
+import ResizeObserver from 'resize-observer-polyfill'
 
 const getListContainerTransformCss = (translateX = 0) =>
   `translateX(-${translateX}px)`
@@ -54,8 +55,12 @@ const Showreel = ({
     } = listContainer.current.getBoundingClientRect()
     const { left, width } = lastChild.getBoundingClientRect()
 
-    return left + width === 0 || containerWidth < left + width
+    return containerWidth < left + width
   }, [listContainer])
+
+  const ro = new ResizeObserver((_entries, _observer) => {
+    setDisplayNextButton(getIsLastItemNotVisible())
+  })
 
   useEffect(() => {
     if (listContainer.current && listContainer.current.children[currentIndex]) {
@@ -71,6 +76,9 @@ const Showreel = ({
   useEffect(() => {
     if (listContainer.current && infinite) {
       setCurrentIndex(listContainer.current.children.length / 3)
+    }
+    if (listContainer.current) {
+      ro.observe(listContainer.current)
     }
   }, [listContainer])
 
