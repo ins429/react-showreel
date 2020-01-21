@@ -6,6 +6,7 @@ import React, {
   useEffect
 } from 'react'
 import './style.css'
+import ResizeObserver from 'resize-observer-polyfill'
 
 const getListContainerTransformCss = (translateX = 0) =>
   `translateX(-${translateX}px)`
@@ -42,7 +43,7 @@ const Showreel = ({
   const [translateX, setTranslateX] = useState(0)
   const [displayNextButton, setDisplayNextButton] = useState(false)
   const [lockButtons, setLockButtons] = useState(false)
-  const getIsLastItemVisible = useCallback(() => {
+  const getIsLastItemNotVisible = useCallback(() => {
     if (!listContainer.current) {
       return false
     }
@@ -56,6 +57,10 @@ const Showreel = ({
 
     return containerWidth < left + width
   }, [listContainer])
+
+  const ro = new ResizeObserver((_entries, _observer) => {
+    setDisplayNextButton(getIsLastItemNotVisible())
+  })
 
   useEffect(() => {
     if (listContainer.current && listContainer.current.children[currentIndex]) {
@@ -72,10 +77,13 @@ const Showreel = ({
     if (listContainer.current && infinite) {
       setCurrentIndex(listContainer.current.children.length / 3)
     }
+    if (listContainer.current) {
+      ro.observe(listContainer.current)
+    }
   }, [listContainer])
 
   useEffect(() => {
-    setDisplayNextButton(getIsLastItemVisible())
+    setDisplayNextButton(getIsLastItemNotVisible())
   }, [])
 
   useEffect(() => {
@@ -177,7 +185,7 @@ const Showreel = ({
         translateX={translateX}
         transitionSpeed={transitionSpeed}
         handleTransitionEnd={() => {
-          setDisplayNextButton(getIsLastItemVisible())
+          setDisplayNextButton(getIsLastItemNotVisible())
           setLockButtons(false)
 
           if (transitionSpeed < 1) {
