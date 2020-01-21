@@ -28,10 +28,6 @@
   border: 0;
 }
 
-.showreel-nav-button svg {
-  pointer-events: none;
-}
-
 .showreel-list-container {
   display: flex;
   flex-basis: 100%;
