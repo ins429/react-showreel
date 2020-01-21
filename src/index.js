@@ -62,7 +62,7 @@ const Showreel = ({
       left,
       width
     )
-    return containerWidth < left + width
+    return left + width === 0 || containerWidth < left + width
   }, [listContainer])
 
   useEffect(() => {
@@ -186,7 +186,7 @@ const Showreel = ({
         translateX={translateX}
         transitionSpeed={transitionSpeed}
         handleTransitionEnd={() => {
-          setDisplayNextButton(getIsLastItemVisible())
+          setDisplayNextButton(getIsLastItemNotVisible())
           setLockButtons(false)
 
           if (transitionSpeed < 1) {

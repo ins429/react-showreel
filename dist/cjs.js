@@ -178,7 +178,7 @@ var Showreel = function Showreel(_ref2) {
         width = _lastChild$getBoundin.width;
 
     console.log('getIsLastItemNotVisible', lastChild, containerWidth, left, width);
-    return containerWidth < left + width;
+    return left + width === 0 || containerWidth < left + width;
   }, [listContainer]);
   React.useEffect(function () {
     if (listContainer.current && listContainer.current.children[currentIndex]) {
@@ -281,7 +281,7 @@ var Showreel = function Showreel(_ref2) {
     translateX: translateX,
     transitionSpeed: transitionSpeed,
     handleTransitionEnd: function handleTransitionEnd() {
-      setDisplayNextButton(getIsLastItemVisible());
+      setDisplayNextButton(getIsLastItemNotVisible());
       setLockButtons(false);
 
       if (transitionSpeed < 1) {
