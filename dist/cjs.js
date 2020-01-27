@@ -1093,6 +1093,11 @@ var Showreel = function Showreel(_ref2) {
     }
 
     var childrenCount = listContainer.current.children.length;
+
+    if (childrenCount - 1 === currentIndex) {
+      return false;
+    }
+
     var lastChild = listContainer.current.children[childrenCount - 1];
 
     var _listContainer$curren = listContainer.current.getBoundingClientRect(),
@@ -1103,7 +1108,7 @@ var Showreel = function Showreel(_ref2) {
         width = _lastChild$getBoundin.width;
 
     return containerWidth < left + width;
-  }, [listContainer]);
+  }, [listContainer, currentIndex]);
   var ro = new index(function (_entries, _observer) {
     setDisplayNextButton(getIsLastItemNotVisible());
   });
@@ -1204,7 +1209,7 @@ var Showreel = function Showreel(_ref2) {
       }
 
       var indexToScroll = currentIndex + slidesToScroll;
-      setCurrentIndex(indexToScroll > listContainer.current.children.length - 1 ? currentIndex + 1 : indexToScroll);
+      setCurrentIndex(indexToScroll > listContainer.current.children.length - 1 ? listContainer.current.children.length - 1 : indexToScroll);
     }
   }, "\u2192") : React__default.createElement("div", null)), React__default.createElement(ListContainer, {
     ref: listContainer,
