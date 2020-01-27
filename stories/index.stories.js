@@ -245,3 +245,34 @@ export const imagesAlignCenter = () => (
     </Showreel>
   </Container>
 )
+
+const FullSize = ({ children, background = 'blue' }) => (
+  <div
+    style={{
+      display: 'block',
+      width: '100%',
+      height: '300px',
+      fontSize: '30px',
+      lineHeight: '300px',
+      textAlign: 'center',
+      margin: 'auto',
+      background: background,
+      color: 'white'
+    }}
+  >
+    {children}
+  </div>
+)
+
+export const fullSize = () => (
+  <Container>
+    <Showreel>
+      <FullSize>one</FullSize>
+      <FullSize background="red">two</FullSize>
+      <FullSize background="black">three</FullSize>
+      <FullSize background="grey">four</FullSize>
+      <FullSize background="purple">five</FullSize>
+      <FullSize background="hotpink">six</FullSize>
+    </Showreel>
+  </Container>
+)
