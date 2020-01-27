@@ -49,6 +49,10 @@ const Showreel = ({
     }
 
     const childrenCount = listContainer.current.children.length
+
+    if (childrenCount - 1 === currentIndex) {
+      return false
+    }
     const lastChild = listContainer.current.children[childrenCount - 1]
     const {
       width: containerWidth
@@ -56,7 +60,7 @@ const Showreel = ({
     const { left, width } = lastChild.getBoundingClientRect()
 
     return containerWidth < left + width
-  }, [listContainer])
+  }, [listContainer, currentIndex])
 
   const ro = new ResizeObserver((_entries, _observer) => {
     setDisplayNextButton(getIsLastItemNotVisible())
@@ -169,7 +173,7 @@ const Showreel = ({
 
               setCurrentIndex(
                 indexToScroll > listContainer.current.children.length - 1
-                  ? currentIndex + 1
+                  ? listContainer.current.children.length - 1
                   : indexToScroll
               )
             }}
